@@ -90,26 +90,26 @@ class calculator:
                 )
                 
                 btn.grid(row=row_idx, column=col_idx, sticky="nsew", padx=2, pady=2)
-    
-        def on_button_click(self, char):
-            """Logic for handling button presses."""
-            if char == 'C':
+
+    def on_button_click(self, char):
+        """Logic for handling button presses."""
+        if char == 'C':
+            self.equation.set("")
+        elif char == '=':
+            try:
+                # eval() handles the math string conversion to result
+                expression = self.equation.get()
+                result = eval(expression)
+                self.equation.set(result)
+            except ZeroDivisionError:
+                messagebox.showerror("Math Error", "Cannot divide by zero")
                 self.equation.set("")
-            elif char == '=':
-                try:
-                    # eval() handles the math string conversion to result
-                    expression = self.equation.get()
-                    result = eval(expression)
-                    self.equation.set(result)
-                except ZeroDivisionError:
-                    messagebox.showerror("Math Error", "Cannot divide by zero")
-                    self.equation.set("")
-                except Exception:
-                    messagebox.showerror("Error", "Invalid Expression")
-                    self.equation.set("")
-            else:
-                current = self.equation.get()
-                self.equation.set(current + str(char))
+            except Exception:
+                messagebox.showerror("Error", "Invalid Expression")
+                self.equation.set("")
+        else:
+            current = self.equation.get()
+            self.equation.set(current + str(char))
 
 if __name__ == "__main__":
     root = tk.Tk()
